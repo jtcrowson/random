@@ -55,16 +55,23 @@ class RandomTests: XCTestCase {
     
     func testArrayWithOneElement() {
         let array = [3]
-        XCTAssertEqual(array.random, 3)
+        for _ in 0..<65_536 {
+            guard let random = array.random, random == array.first else {
+                XCTFail("Generated a random element not contained in the source array.")
+                return
+            }
+        }
     }
     
     func testArrayWithMultipleElements() {
         let array = [1, 2, 3]
         var results: [Int: Int] = [:]
         for _ in 0..<65_536 {
-            if let foo = array.random {
-                results[foo] = (results[foo] ?? 0) + 1
+            guard let random = array.random, array.contains(random) else {
+                XCTFail("Generated a random element not contained in the source array.")
+                return
             }
+            results[random] = (results[random] ?? 0) + 1
         }
         print(results)
     }
