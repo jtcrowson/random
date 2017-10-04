@@ -3,15 +3,29 @@ import Core
 @testable import Random
 
 class RandomTests: XCTestCase {
-    static var allTests = [
-        ("testURandom", testURandom),
-        ("testOSRandom", testOSRandom),
-        ("testURandomCount", testURandomCount),
-        ("testForTrailingZeros", testForTrailingZeros)
-    ]
 
-    func testURandom() throws {
+    func testMakeInt8() throws {
         let rand = try URandom.makeInt8()
+        print(rand)
+    }
+    
+    func testMakeInt16() throws {
+        let rand = try URandom.makeInt16()
+        print(rand)
+    }
+    
+    func testMakeInt32() throws {
+        let rand = try URandom.makeInt32()
+        print(rand)
+    }
+    
+    func testMakeInt64() throws {
+        let rand = try URandom.makeInt64()
+        print(rand)
+    }
+    
+    func testMakeInt() throws {
+        let rand = try URandom.makeInt()
         print(rand)
     }
 
@@ -34,7 +48,17 @@ class RandomTests: XCTestCase {
         XCTAssertNotEqual(tail, zeros)
     }
     
-    func testArray() throws {
+    func testArrayWithZeroElements() {
+        let array: [Int] = []
+        XCTAssertNil(array.random)
+    }
+    
+    func testArrayWithOneElement() {
+        let array = [3]
+        XCTAssertEqual(array.random, 3)
+    }
+    
+    func testArrayWithMultipleElements() {
         let array = [1, 2, 3]
         var results: [Int: Int] = [:]
         for _ in 0..<65_536 {
